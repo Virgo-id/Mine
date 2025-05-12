@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Website Pribadi</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #121212;
+    }
+
+    /* Halaman login */
+    .login-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #121212;
+    }
+
+    .login-box {
+      background: #333;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+      width: 300px;
+      text-align: center;
+      color: white;
+      box-sizing: border-box;
+    }
+
+    .login-box h2 {
+      margin: 0;
+      margin-bottom: 1.5rem;
+      font-size: 1.8rem;
+    }
+
+    .login-box input {
+      width: 100%;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border: none;
+      border-radius: 8px;
+      background: #555;
+      color: white;
+      box-sizing: border-box; /* Mengatasi masalah input yang melebihi box */
+    }
+
+    .login-box button {
+      width: 100%;
+      padding: 1rem;
+      border: none;
+      border-radius: 8px;
+      background: #4CAF50;
+      color: white;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    .login-box button:hover {
+      background: #45a049;
+    }
+
+    .login-box p {
+      color: red;
+      display: none;
+      font-size: 1rem;
+    }
+
+    /* Halaman Website Pribadi */
+    header {
+      background: black;
+      color: white;
+      text-align: center;
+      padding: 0.5rem 1rem;
+      position: relative;
+      text-shadow: 0 0 4px yellow;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 50px;
+    }
+
+    .menu-button {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      background: #fff;
+      color: #000;
+      border: none;
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      cursor: pointer;
+      border-radius: 8px;
+    }
+
+    .menu-popup {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 1000;
+    }
+
+    .menu-popup.show {
+      display: block;
+    }
+
+    .menu-content {
+      background: white;
+      width: 250px;
+      height: 100%;
+      padding: 2rem;
+      box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+      color: black;
+    }
+
+    .menu-header {
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-bottom: 2rem;
+      text-align: center;
+      border-bottom: 2px solid #ccc;
+      padding-bottom: 0.5rem;
+    }
+
+    .menu-content a {
+      display: block;
+      margin: 1rem 0;
+      color: black;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .content {
+      padding: 2rem;
+      background: white;
+      color: black;
+      margin: 1rem;
+      border-radius: 10px;
+      display: none;
+    }
+
+    .content.show {
+      display: block;
+    }
+
+    .footer {
+      background: #1c1c1c;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      text-shadow: 0 0 5px white;
+    }
+
+    details {
+      background: #f5f5f5;
+      border-radius: 5px;
+      margin-bottom: 1rem;
+      padding: 0.5rem 1rem;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: bold;
+      color: black;
+      text-shadow: none;
+    }
+
+  </style>
+</head>
+<body>
+  <!-- Halaman Login -->
+  <div id="loginPage" class="login-container">
+    <div class="login-box">
+      <h2>Login</h2>
+      <input type="password" id="passwordInput" placeholder="Masukkan Password" />
+      <button onclick="checkPassword()">Masuk</button>
+      <p id="loginError">Password Salah, Coba Lagi</p>
+    </div>
+  </div>
+
+  <!-- Halaman Website Pribadi -->
+  <div id="mainContent" style="display: none;">
+    <header>
+      <button class="menu-button" onclick="toggleMenu()">☰ Menu</button>
+      <h1>Adlan Madjied Ridho</h1>
+      <p>A PRIVATE WEBSITE</p>
+    </header>
+    <div class="menu-popup" id="menuPopup" onclick="closeMenu(event)">
+      <div class="menu-content">
+        <div class="menu-header">Menu</div>
+        <a href="#bedahbuku" onclick="showContent('bedahbuku')">Catatan Buku</a>
+        <a href="#password" onclick="showContent('password')">Akun</a>
+        <a href="#catatan" onclick="showContent('catatan')">Catatan Pribadi</a>
+        <a href="#mywebsite" onclick="showContent('mywebsite')">MyWebsite</a>
+      </div>
+    </div>
+
+    <!-- Hasil Bedah Buku -->
+    <div class="content" id="bedahbuku">
+      <h3><u>Catatan Buku</u></h3>
+      <details>
+        <summary>Psikologi Sholat</summary>
+        <ul>
+          <li>"لَوْ يَعْلَمُونَ مَا فِي الْعَتَمَةِ وَالصُّبْحِ لَأَتَوْهُمَا وَلَوْ حَبْوًا"<br><br>
+        "Jika mereka mengetahui apa yang ada pada (pahala) sholat Isya dan Subuh, niscaya mereka akan datang (menghadap) keduanya, meskipun mereka harus merangkak."</li><br><br><br>
+          <li>قال الله تعالى:
+يا ابن آدم! تفرغ لعبادتي أملأ صدرك غنى، وأسد فقرك، وإن لم تفعل ملأت يديك شغلاً، ولم أسد فقرك.
+(رواه أحمد، والترمذي، وابن ماجه، والحاكم عن أبي هريرة رضي الله عنه)<br><br>
+
+Artinya:<br>
+Allah Ta’ala berfirman:<br>
+“Wahai anak Adam! Luangkanlah dirimu untuk beribadah kepada-Ku, niscaya Aku penuhi dadamu dengan kekayaan dan Aku tutupi kebutuhanmu. Namun jika engkau tidak melakukannya, niscaya Aku penuhi tanganmu dengan kesibukan dan tidak Aku cukupkan kebutuhanmu.”    
+      </details>
+      
+      <details>
+        <summary>Tips Mudah Menumpas Marah</summary>
+        <p>Orang yang mampu menahan marah sesungguhnya memiliki pribadi yang baik. Mungkin saja ketika Anda bertangkar dengan pasangan, entah itu istri atau pacar Anda, seolah-olah Anda ingin memukul, memaki, mencaci, bahkan memukul ketika marah, seolah-olah dalam diri Anda muncul perasaan seperti orang yang gagah. Padahal tidak. Ketika Anda sedang marah, berarti Anda sedang kalah melawan dorongan energi  negatif dalam diri Anda sendiri.</p>
+      </details>
+      
+      <details>
+        <summary>none</summary>
+        <p>.....</p>
+      </details>
+    </div>
+
+    <!-- Password Email -->
+    <div class="content" id="password">
+      <h3><u>Akun</u></h3>
+      <details>
+        <summary>akun Github</summary>
+        <p><strong>Email:</strong>adlan746</p>
+        <p><strong>Password:</strong>X9g!vF2@kZ7pQb8s</p>
+      </details>
+      <details>
+        <summary>akun Outlook</summary>
+        <p><strong>Email:</strong> ridhoadlanmadjied2@outlook.co.id</p>
+        <p><strong>Password:</strong> 01september2007</p>
+      </details>
+       <details>
+        <summary>akun google</summary>
+        <p><strong>Email:</strong> ridhoadlanmadjied@gmail.com</p>
+        <p><strong>Password:</strong> 01september2007</p>
+      </details>
+       <details>
+        <summary>akun none</summary>
+        <p><strong>Email:</strong> none</p>
+        <p><strong>Password:</strong> none</p>
+      </details>
+    </div>
+
+    <!-- Catatan Pribadi -->
+    <div class="content" id="catatan">
+      <h3><u>Catatan Pribadi</u></h3>
+      <details>
+        <summary>sholat shubuh dan isya</summary>
+        <p>"لَوْ يَعْلَمُونَ مَا فِي الْعَتَمَةِ وَالصُّبْحِ لَأَتَوْهُمَا وَلَوْ حَبْوًا"</p>
+        <p>"Jika mereka mengetahui apa yang ada pada (pahala) sholat Isya dan Subuh, niscaya mereka akan datang (menghadap) keduanya, meskipun mereka harus merangkak."</p>
+      </details>
+
+      <details>
+    <summary>Arti Doa Dalam Sholat</summary>
+    <p><strong>• Takbiratul Ihram</strong><br>
+    Allahu Akbar<br>
+    "Allah Maha Besar."<br><br>
+
+    <strong>• Ruku’</strong><br>
+    Subhana Rabbiyal Adzim<br>
+    "Maha Suci Tuhanku Yang Maha Agung."<br><br>
+
+    <strong>• I'tidal</strong><br>
+    Sami' Allahu liman hamidah, rabbana lakal hamd<br>
+    "Allah mendengar siapa saja yang memuji-Nya, Ya Tuhan kami, bagi Engkaulah segala pujian."<br><br>
+
+    <strong>• I'tidal lengkap</strong><br>
+    Rabbana lakal hamdu mil' as-sama wa mil' al-ardh wa mil' ama syi'ta min syay'in ba'd<br>
+    "Ya Tuhan kami, bagi Engkaulah segala pujian sebanyak yang ada di langit, sebanyak yang ada di bumi, sebanyak apa yang Engkau kehendaki setelah itu."<br><br>
+
+    <strong>• Sujud</strong><br>
+    Subhana Rabbiyal A'la<br>
+    "Maha Suci Tuhanku Yang Maha Tinggi."<br><br>
+
+    <strong>• Tasyahhud</strong><br>
+    At-Tahiyyat<br>
+    "Salam sejahtera untukmu, wahai Nabi, rahmat Allah dan berkah-Nya, salam sejahtera untuk kami dan hamba-hamba Allah yang saleh, aku bersaksi bahwa tiada Tuhan selain Allah, dan aku bersaksi bahwa Muhammad adalah hamba dan utusan-Nya."<br><br>
+
+    <strong>• Salam</strong><br>
+    Assalamu'alaikum warahmatullahi wabarakatuh<br>
+    "Semoga keselamatan, rahmat, dan berkah Allah tercurah kepada kalian."
+    </p>
+</details>
+
+
+<details>
+    <summary>Strategi Crypto</summary>
+    <p>1. <strong>Bajing Loncat</strong><br>
+    Intinya, beli aset crypto saat harga turun drastis, lalu jual saat harga naik signifikan dalam waktu cepat. Biasanya, dilakukan untuk memanfaatkan volatilitas pasar.<br>
+    <strong>Kelebihannya:</strong><br>
+    - Profit cepat kalau timing-nya tepat.<br>
+    - Cocok untuk yang suka risiko dan kejar keuntungan jangka pendek.<br>
+    <strong>Kekurangannya:</strong><br>
+    - Risiko besar jika harga nggak naik sesuai harapan.<br>
+    - Perlu analisis pasar yang tajam dan keputusan cepat.
+    </p>
+
+    <p>2. <strong>Serigala Domba (The Greater Fool Theory)</strong><br>
+    Prinsipnya sederhana: beli aset crypto dengan harapan bisa jual ke orang yang lebih "bodoh" atau lebih berani dengan harga lebih tinggi. Aset yang dibeli sebenarnya nggak terlalu berharga atau overvalued, tapi berharap ada yang mau bayar lebih mahal di masa depan.<br>
+    <strong>Kelebihannya:</strong><br>
+    - Untung besar kalau jual tepat waktu ke "fool" berikutnya.<br>
+    - Menjanjikan keuntungan jangka pendek.<br>
+    <strong>Kekurangannya:</strong><br>
+    - Sangat berisiko. Bisa jadi malah kamu yang jadi "fool" dan rugi.<br>
+    - Risiko tinggi saat pasar mulai koreksi dan nggak ada yang mau beli lagi.<br>
+    Strategi ini cocok buat yang suka spekulasi dan jago timing pasar. Gimana, Rid? Cukup menarik, kan?
+    </p>
+
+    <p>3. <strong>Moon Bag</strong><br>
+    Fokusnya adalah long-term hold, dengan twist. Kamu beli aset crypto yang punya potensi "moon" (naik drastis) di masa depan, tapi cuma hold sebagian kecil dari total investasimu. Kalau harga "moon," keuntungan besar meski modal kecil.<br>
+    <strong>Kelebihannya:</strong><br>
+    - Potensi keuntungan besar jika harga benar-benar melambung.<br>
+    - Tidak perlu aktif trading, lebih ke investasi pasif dengan potensi jangka panjang.<br>
+    <strong>Kekurangannya:</strong><br>
+    - Harus bisa memilih coin yang punya potensi, bukan hanya hype.<br>
+    - Proyek seperti ini bisa gagal, jadi riset lebih dalam diperlukan.<br>
+    Kalau kamu pegang banyak coin, mungkin salah satunya bisa jadi "moon bag"-mu. Gimana, Rid? Pernah coba?
+    </p>
+
+    <p>4. <strong>Gulung-gulung (Compounding Effect)</strong><br>
+    Fokus pada memanfaatkan bunga atau keuntungan dari investasi untuk menghasilkan lebih banyak keuntungan. Setelah profit dari trading atau staking, kamu kembali menanamkan profit itu untuk beli lebih banyak aset.<br>
+    Intinya, seperti bunga berbunga di dunia crypto: semakin banyak yang dikumpulkan, semakin besar potensi keuntungan. Tapi, semakin besar potensi, semakin tinggi juga risikonya.
+    </p>
+
+    <p>5. <strong>Tebar Jala (Diversifikasi)</strong><br>
+    Mirip dengan konsep diversifikasi. Alih-alih menaruh uangmu dalam satu aset, kamu "menebar" investasi ke berbagai macam aset. Risiko jadi lebih tersebar.<br>
+    Misalnya, dana dibagi ke beberapa koin atau token berbeda dengan potensi pertumbuhan yang berbeda-beda. Ada yang high-risk, high-return, ada yang lebih stabil.<br>
+    <strong>Kelebihannya:</strong><br>
+    - Mengurangi dampak kerugian jika salah satu investasi gagal.<br>
+    <strong>Kekurangannya:</strong><br>
+    - Semakin banyak diversifikasi, semakin sulit memonitor dan mengelola aset. Kerja kerasnya juga lebih besar.<br>
+    Paham dengan ide “Tebar Jala” ini, Rid?
+    </p>
+
+    <p>6. <strong>Strategi Investasi Terkonsentrasi</strong><br>
+    Kebalikan dari "Tebar Jala." Fokuskan investasi pada satu atau beberapa aset crypto yang kamu yakini memiliki potensi besar.<br>
+    <strong>Kelebihannya:</strong><br>
+    - Keuntungan besar jika aset yang dipilih sukses.<br>
+    <strong>Kekurangannya:</strong><br>
+    - Risiko tinggi. Jika salah satu investasi gagal, kerugian bisa besar.<br>
+    Cocok buat yang suka high-risk, high-reward, dan siap menghadapi volatilitas besar. Kalau yakin dengan aset yang dipilih, bisa sangat menguntungkan.
+    </p>
+</details>
+
+      <details>
+    <summary>Crypto Investing Tools</summary>
+    1. <strong>Basic Crypto Data</strong><br>
+    Ini adalah informasi dasar terkait cryptocurrency, seperti harga terkini, volume perdagangan, dan kapitalisasi pasar. Data ini membantu investor memantau pergerakan pasar dan membuat keputusan investasi yang lebih terinformasi.<br><br>
+
+    2. <strong>Portofolio Tracker</strong><br>
+    Alat ini memungkinkan kamu untuk melacak semua investasi crypto yang kamu miliki dalam satu tempat. Kamu bisa melihat performa aset, keuntungan atau kerugian yang didapat, serta perbandingan antara berbagai koin atau token dalam portofolio kamu.<br><br>
+
+    3. <strong>Cryptocurrency Wallet</strong><br>
+    Dompet crypto adalah tempat penyimpanan untuk kunci privat dan publik yang digunakan untuk mengakses dan mengelola aset crypto. Ada dua jenis utama dompet: dompet panas (hot wallet) yang terhubung ke internet dan dompet dingin (cold wallet) yang lebih aman karena tidak terhubung ke internet.<br><br>
+
+    4. <strong>Quantitative Tools</strong><br>
+    Alat ini menggunakan data numerik dan algoritma untuk membantu analisis pasar dan pengambilan keputusan investasi. Tools ini sering digunakan oleh trader profesional untuk menganalisis tren harga, volume perdagangan, dan metrik pasar lainnya secara lebih mendalam.<br><br>
+
+    5. <strong>Blockchain Fundamental</strong><br>
+    Ini merujuk pada analisis dasar blockchain yang mendasari cryptocurrency tertentu. Menganalisis blockchain fundamental berarti menilai aspek seperti keamanan, desentralisasi, skalabilitas, serta nilai penggunaan dari blockchain yang digunakan oleh koin atau token yang kamu pertimbangkan.
+    </p>
+</details>
+
+<details>
+    <summary>none</summary>
+    <p><strong>• Crypto Investing Alpha</strong><br>
+    1. <strong>The Elevator Concept</strong><br>
+    Ini adalah analogi untuk menjelaskan bagaimana harga cryptocurrency dapat bergerak dalam dua arah yang sangat cepat—seperti elevator yang naik dan turun. Konsep ini menekankan bahwa pasar crypto sangat volatil, jadi investor harus siap dengan pergerakan harga yang tajam. Jika kamu bisa memanfaatkan momentum tersebut dengan timing yang tepat, kamu bisa meraih keuntungan besar, tapi jika tidak hati-hati, risikonya juga tinggi.<br><br>
+
+    2. <strong>Konsep Pagi, Siang, Malam</strong><br>
+    Konsep ini merujuk pada pendekatan waktu dalam berinvestasi. *Pagi* bisa merujuk pada waktu untuk memulai investasi dan merencanakan strategi, *Siang* sebagai waktu untuk aktif trading atau memantau pergerakan pasar, dan *Malam* untuk evaluasi dan perencanaan jangka panjang. Ini adalah cara untuk mengelola waktu dan aktivitas investasi sepanjang hari, dengan pendekatan yang lebih terstruktur.<br><br>
+
+    3. <strong>The Wallet Tracker, The Crypto Stalker</strong><br>
+    "Wallet Tracker" adalah alat untuk melacak dompet cryptocurrency—melihat transaksi, saldo, dan aset dalam portofolio kamu. "Crypto Stalker" lebih mengarah pada alat untuk memantau pergerakan transaksi dari dompet atau akun crypto lainnya, untuk mendapatkan informasi tentang trader atau whale yang berpengaruh. Ini memberikan wawasan tentang pasar dan bisa menjadi strategi untuk mengikuti jejak orang yang lebih berpengalaman.<br><br>
+
+    4. <strong>Analisis Sentimen (Fear and Greed)</strong><br>
+    Ini adalah cara untuk mengukur perasaan atau emosi pasar berdasarkan dua faktor utama: ketakutan (fear) dan keserakahan (greed). Indeks Fear & Greed menunjukkan seberapa emosional pasar. Ketika pasar didorong oleh ketakutan, harga cenderung turun, sedangkan saat didorong oleh keserakahan, harga cenderung naik. Memahami analisis sentimen membantu investor mengantisipasi perubahan besar dalam pasar.<br><br>
+
+    5. <strong>Stock to Flow Model</strong><br>
+    Model ini digunakan untuk memprediksi harga aset yang memiliki persediaan terbatas, seperti Bitcoin. Stock-to-flow mengukur kelangkaan suatu aset dengan membandingkan jumlah stok yang ada dengan aliran produksi baru yang terjadi setiap tahun. Semakin tinggi rasio stock-to-flow, semakin tinggi kelangkaan aset tersebut, yang sering kali berhubungan dengan harga yang lebih tinggi di masa depan.<br><br>
+
+    6. <strong>Cara Memeriksa Smart Contract (Menghindari Scam dalam Crypto)</strong><br>
+    Memeriksa smart contract adalah langkah penting untuk menghindari penipuan dalam dunia crypto. Sebelum berinteraksi dengan proyek atau token, penting untuk memeriksa kode smart contract yang digunakan untuk memastikan tidak ada celah keamanan atau kode jahat. Beberapa hal yang perlu diperiksa adalah audit keamanan, reputasi tim pengembang, serta apakah kontrak tersebut transparan dan terbuka untuk umum.<br><br>
+
+    7. <strong>Maximizing AI to Beat the Market</strong><br>
+    Menggunakan kecerdasan buatan (AI) untuk menganalisis data besar dan pola pasar guna membuat keputusan investasi lebih cerdas. AI bisa digunakan untuk menganalisis grafik, sentimen pasar, dan bahkan prediksi harga. Ini memungkinkan investor untuk membuat keputusan yang lebih terinformasi dan lebih cepat, berpotensi mengalahkan pasar yang penuh dengan volatilitas.
+    </p>
+</details>
+
+      
+      <details>
+        <summary>none</summary>
+        <p>none</p>
+      </details>
+    </div>
+
+ <div class="content" id="mywebsite">
+      <h3><u>Daftar Website Saya</u></h3>
+      <details>
+        <summary>Iksaj</summary>
+        <a href="https://adlan746.github.io/iksaj/">https://adlan746.github.io/iksaj</a><br>
+        <a href="tinyurl.com/iksaj">tinyurl.com/iksaj</a>
+      </details>
+      <details>
+        <summary>none</summary>
+        <p>None</p>
+      </details>
+    </div>
+
+    <footer class="footer">
+      &copy; 2025 Website Pribadi - All rights reserved.
+    </footer>
+  </div>
+
+  <script>
+    // Fungsi untuk memeriksa password
+    function checkPassword() {
+      const password = "01september2007"; // Ganti dengan password yang diinginkan
+      const inputPassword = document.getElementById('passwordInput').value;
+      const loginError = document.getElementById('loginError');
+
+      if (inputPassword === password) {
+        document.getElementById('loginPage').style.display = "none"; // Sembunyikan halaman login
+        document.getElementById('mainContent').style.display = "block"; // Tampilkan halaman utama
+      } else {
+        loginError.style.display = "block"; // Tampilkan pesan error
+      }
+    }
+
+    // Fungsi untuk menampilkan konten berdasarkan kategori
+    function showContent(contentId) {
+      // Sembunyikan semua konten terlebih dahulu
+      const contents = document.querySelectorAll('.content');
+      contents.forEach(content => content.classList.remove('show'));
+
+      // Tampilkan konten yang dipilih
+      const selectedContent = document.getElementById(contentId);
+      if (selectedContent) {
+        selectedContent.classList.add('show');
+      }
+    }
+
+    // Fungsi untuk menampilkan atau menyembunyikan menu
+    function toggleMenu() {
+      const menu = document.getElementById('menuPopup');
+      menu.classList.toggle('show');
+    }
+
+    function closeMenu(event) {
+      if (!event.target.closest('.menu-content')) {
+        document.getElementById('menuPopup').classList.remove('show');
+      }
+    }
+  </script>
+</body>
+</html>
